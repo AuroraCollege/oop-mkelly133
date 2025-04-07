@@ -9,6 +9,6 @@ class BankAcct:
         self.__balance += amount
 
     def withdraw(self,amount,pin):
-        if self.pin == pin and self.balance >= amount:
+        if self.pin == pin and self.__balance >= amount:
             self.__balance -= amount
 
