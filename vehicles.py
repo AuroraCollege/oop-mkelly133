@@ -1,25 +1,81 @@
+import csv
+
 class Vehicle:
-    def __init__(self, fuel, mileage):
-        self.fuel = fuel
-        self.mileage = mileage
+    def __init__(self, name, color):
+        self.__name = name  
+        self.color = color 
+
+    def start_engine(self):
+        print('Starting engine.')
+ 
+    def display_info(self):
+        print(f"Name: {self.__name}, Color: {self.color}")
 
     def return_info(self):
-        return f'Fuel: {self.fuel}, Mileage: {self.mileage}'
+        return (f"Name: {self.__name}, Color: {self.color}")
 
-class Motorbike(Vehicle):
-    def __init__(self, fuel, mileage, hours):
-        self.hours = hours
-        super().__init__(fuel, mileage)
-
-    def return_info(self):
-        return super().return_info() + f', Hours: {self.hours}'
 
 class Car(Vehicle):
-    pass
+    def __init__(self, name, color, brand):
+        super().__init__(name, color)
+        self.brand = brand
 
-ninja = Motorbike('petrol', 5000, 25)
-carolla = Car('petrol',780000)
-garage = [ninja, carolla]
-for vehicle in garage:
-    print(vehicle.return_info())
+    def start_engine(self):
+        print("Starting the car's engine")
+    
+    def display_info(self):
+        super().display_info()
+        print(f"Brand: {self.brand}")
 
+class Bike(Vehicle):
+    def __init__(self, name, color, type):
+        super().__init__(name, color)
+        self.type = type
+
+class Truck(Vehicle):
+    def __init__(self, name, color, capacity):
+        super().__init__(name, color)
+        self.capacity = capacity
+
+    def set_capacity(self, capacity):
+        if capacity > 3000:
+            print('This capacity is too much.')
+        else:
+            self.capacity = capacity
+
+    def display_info(self):
+        super().display_info()
+        print(f"Capacity: {self.capacity}")
+
+
+
+def save(info):
+    with open("output.csv", mode="w", newline="") as file:
+        writer = csv.writer(file)
+        for object in info:
+            data = object.return_info()
+            writer.writerow(data)
+        print("CSV file saved successfully!")
+
+def display_vehicle_info(vehicle):
+    vehicle.display_info()
+
+vehicles = [
+    Car("SUV", "Black", "Toyota"),
+    Bike("Sport", "Red", "Mountain"),
+    Truck("Pickup", "White", "5000 lbs")
+]
+
+print("Vehicle Info")
+for vehicle in vehicles:
+    print()
+    vehicle.display_info()
+    vehicle.start_engine()
+
+truck = vehicles[2]
+
+truck.set_capacity(4000)
+truck.set_capacity(2500)
+truck.display_info()
+
+save(vehicles)
