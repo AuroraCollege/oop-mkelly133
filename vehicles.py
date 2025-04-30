@@ -3,10 +3,15 @@ import csv
 class Vehicle:
     def __init__(self, name, color):
         self.__name = name  
-        self.color = color 
+        self.color = color
+        self.__engine_running__ = False
 
     def start_engine(self):
-        print('Starting engine.')
+        if self.__engine_running__:
+            print('Engine already running!')
+        else:
+            self.__engine_running__ = True
+            print('Starting engine.')
  
     def display_info(self):
         print(f"Name: {self.__name}, Color: {self.color}")
@@ -72,6 +77,7 @@ for vehicle in vehicles:
     vehicle.display_info()
     vehicle.start_engine()
 
+car = vehicles[0]
 truck = vehicles[2]
 
 truck.set_capacity(4000)
@@ -79,3 +85,6 @@ truck.set_capacity(2500)
 truck.display_info()
 
 save(vehicles)
+
+print()
+car.start_engine()
